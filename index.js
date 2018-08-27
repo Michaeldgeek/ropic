@@ -1,7 +1,7 @@
 var express = require('express');
 var config = require('./config');
 var compression = require('compression');
-var port = process.env.PORT || config.PORT;
+var port =  config.PORT;
 var app = express();
 var fs = require('fs');
 var search = require('youtube-search');
