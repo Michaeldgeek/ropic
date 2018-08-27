@@ -19,20 +19,7 @@ app.get('/', function(req, res) {
        
       search('nwa baby', opts, function(err, results) {
         if(err) return console.log(err);
-        let stream = ytdl(results[0].link, {
-            quality: 'highestaudio',
-            //filter: 'audioonly',
-          });
-          ffmpeg(stream)
-          .audioBitrate(128)
-          .save(`nwa.mp3`)
-          .on('progress', (p) => {
-            readline.cursorTo(process.stdout, 0);
-            process.stdout.write(`${p.targetSize}kb downloaded`);
-          })
-          .on('end', () => {
-            console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-        });
+        
         res.send(results);
       });
       
