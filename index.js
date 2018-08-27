@@ -12,16 +12,9 @@ const ffmpeg = require('fluent-ffmpeg');
 app.use(compression());
 
 app.get('/', function(req, res) {
-    var opts = {
-        maxResults: 10,
-        key: config.YT_KEY
-      };
-       
-      search('nwa baby', opts, function(err, results) {
-        if(err) return console.log(err);
-        
-        res.send(results);
-      });
+    
+        res.send("results");
+    
       
 });
 
