@@ -27,13 +27,13 @@ app.get('/', function(req, res) {
           .audioBitrate(128)
           .save(`nwa.mp3`)
           .on('progress', (p) => {
-            readline.cursorTo(process.stdout, 0);
-            process.stdout.write(`${p.targetSize}kb downloaded`);
+           process.stdout.write(`${p.targetSize}kb downloaded`);
           })
           .on('end', () => {
             console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
+            res.send(results);
         });
-        res.send(results);
+       
       });
       
 });
