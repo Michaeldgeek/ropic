@@ -38,4 +38,4 @@ app.get('/', function(req, res) {
       
 });
 
-app.listen(port,"tropical.eastus.cloudapp.azure.com");
+app.listen(port);
