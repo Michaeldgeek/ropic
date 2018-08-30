@@ -30,12 +30,24 @@ app.get('/', function(req, res) {
            process.stdout.write(`${p.targetSize}kb downloaded`);
           })
           .on('end', () => {
-            console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-            res.send(results);
+           //
         });
        
       });
       
+});
+
+app.get('get-songs', function(req, res) {
+  var opts = {
+      maxResults: 10,
+      key: config.YT_KEY
+    };
+     var query = req.q.trim();
+    search(, opts, function(query, results) {
+      if(err) return console.log(err);
+      res.send(results);
+    });
+    
 });
 
 app.listen(port);
