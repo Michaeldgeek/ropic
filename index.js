@@ -6,10 +6,12 @@ var app = express();
 var fs = require('fs');
 var search = require('youtube-search');
 const ytdl = require('ytdl-core');
+var bodyParser = require('body-parser');
 const readline = require('linebyline');
 const ffmpeg = require('fluent-ffmpeg');
 
 app.use(compression());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function(req, res) {
     var opts = {
@@ -37,13 +39,13 @@ app.get('/', function(req, res) {
       
 });
 
-app.get('get-songs', function(req, res) {
+app.get('/get-songs', function(req, res) {
   var opts = {
       maxResults: 10,
       key: config.YT_KEY
     };
-     var query = req.q.trim();
-    search(, opts, function(query, results) {
+    var query = req.query.q.trim();
+    search(query, opts, function(err, results) {
       if(err) return console.log(err);
       res.send(results);
     });
