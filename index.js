@@ -50,6 +50,7 @@ app.get('/download-song', function(req, res) {
      //process.stdout.write(`${p.targetSize}kb downloaded`);
     })
     .on('end', () => {
+      console.log("done");
      res.sendFile(__dirname + "/" + name, function(err) {
       if(!err) {
         fs.unlinkSync(__dirname + "/" + name);
