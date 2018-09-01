@@ -44,19 +44,12 @@ app.get('/download-song', function(req, res) {
       //filter: 'audioonly',
     });
     ffmpeg(stream)
-    .audioBitrate(128)
-    .save(name)
-    .on('progress', (p) => {
-     //process.stdout.write(`${p.targetSize}kb downloaded`);
+    .output(__dirname + "/" +name)
+    .output(res)
+    .on('end', function() {
+      console.log('Finished processing');
     })
-    .on('end', () => {
-      console.log("done");
-     res.sendFile(__dirname + "/" + name, function(err) {
-      if(!err) {
-        fs.unlinkSync(__dirname + "/" + name);
-      }
-     });
-  });
+    .run();
  
     
 });
