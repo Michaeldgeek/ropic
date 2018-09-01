@@ -52,7 +52,7 @@ app.get('/download-song', function(req, res) {
     .on('end', () => {
      res.sendFile("./"+ name, function(err) {
       if(!err) {
-        fs.unlinkSync("./"+name);
+        fs.unlinkSync(__dirname + "" + name);
       }
      });
   });
