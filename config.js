@@ -1,5 +1,5 @@
 var config = {
-    PORT: '80',
+    PORT: '3000',
     UN_VERIFIED: "unverified",
     VERIFIED: "verified",
     YES: "yes",
