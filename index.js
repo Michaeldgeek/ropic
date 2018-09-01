@@ -9,33 +9,13 @@ const ytdl = require('ytdl-core');
 var bodyParser = require('body-parser');
 const readline = require('linebyline');
 const ffmpeg = require('fluent-ffmpeg');
+var randomstring = require("randomstring");
 
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function(req, res) {
-    var opts = {
-        maxResults: 10,
-        key: config.YT_KEY
-      };
-       
-      search('nwa baby', opts, function(err, results) {
-        if(err) return console.log(err);
-        let stream = ytdl(results[0].link, {
-            quality: 'highestaudio',
-            //filter: 'audioonly',
-          });
-          ffmpeg(stream)
-          .audioBitrate(128)
-          .save(`nwa.mp3`)
-          .on('progress', (p) => {
-           process.stdout.write(`${p.targetSize}kb downloaded`);
-          })
-          .on('end', () => {
-           //
-        });
-       
-      });
+   res.send("Server is up and running");
       
 });
 
@@ -49,6 +29,34 @@ app.get('/get-songs', function(req, res) {
       if(err) return console.log(err);
       res.send(results);
     });
+    
+});
+
+app.get('/download-song', function(req, res) {
+  var opts = {
+      maxResults: 10,
+      key: config.YT_KEY
+    };
+    var link = req.query.link.trim();
+    var name = randomstring.generate() + ".mp3";
+    let stream = ytdl(link, {
+      quality: 'highestaudio',
+      //filter: 'audioonly',
+    });
+    ffmpeg(stream)
+    .audioBitrate(128)
+    .save(name)
+    .on('progress', (p) => {
+     //process.stdout.write(`${p.targetSize}kb downloaded`);
+    })
+    .on('end', () => {
+     res.sendFile(name, function(err) {
+      if(!err) {
+        fs.unlinkSync(name);
+      }
+     });
+  });
+ 
     
 });
 
