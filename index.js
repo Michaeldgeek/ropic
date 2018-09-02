@@ -47,7 +47,7 @@ app.get('/download-song', function(req, res) {
     let start = Date.now();
     ffmpeg(stream)
       .audioBitrate(128)
-      .save(`${__dirname}/${id}.mp3`)
+      .pipe(res)
       .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
       })
