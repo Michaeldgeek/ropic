@@ -39,7 +39,7 @@ app.get('/download-song', function(req, res) {
     };
     res.setHeader("content-type", "audio/mp3");
     
-    var writeStream = fs.createWriteStream('l.mp3');
+    var writeStream = fs.createWriteStream(__dirname + '/l.mp3');
     
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
@@ -59,7 +59,7 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    }).writeToStream(writeStream, {end:true});
+    }).pipe(writeStream, {end:true});
     
    // streams.on("open",function(number) {
      // console.log(number);
