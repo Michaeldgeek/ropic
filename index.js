@@ -49,13 +49,15 @@ app.get('/download-song', function(req, res) {
 
     let start = Date.now();
     var readStream; 
+    var set = false;
     
     ffmpeg(stream)
        .audioBitrate(128)
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
-       if(p.targetSize > 199) {
+       if(p.targetSize > 199 && !set) {
         readStream.pipe(res);
+        false = true;
        }
       })
       .on("start",function() {
