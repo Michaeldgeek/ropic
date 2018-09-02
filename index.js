@@ -51,23 +51,26 @@ app.get('/download-song', function(req, res) {
     var readStream; 
     var set = false;
     
+
     ffmpeg(stream)
+    .output(res)
        .audioBitrate(128)
        .on('progress', (p) => {
       
       })
       .on("start",function() {
-        
+        console.log(start);
         
       })
       .on('end', () => {
-        readStream = fs.createReadStream(__dirname + '/' + name);
-        readStream.pipe(res);
-        readStream.on('close',function() {
-          fs.unlinkSync(__dirname + '/' + name);
-        });
+        console.log("done");
+      //  readStream = fs.createReadStream(__dirname + '/' + name);
+        //readStream.pipe(res);
+        //readStream.on('close',function() {
+          //fs.unlinkSync(__dirname + '/' + name);
+        //});
       
-    }).save(__dirname + '/' + name);
+    });
     
    // streams.on("open",function(number) {
      // console.log(number);
