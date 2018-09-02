@@ -39,8 +39,7 @@ app.get('/download-song', function(req, res) {
     };
     res.setHeader("content-type", "audio/mp3");
     
-    var writeStream = fs.createWriteStream(__dirname + '/l.mp3');
-    
+   
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
     let stream = ytdl(link, {
@@ -59,7 +58,7 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    }).pipe(writeStream, {end:true});
+    }).save(__dirname + '/l.mp3');;
     
    // streams.on("open",function(number) {
      // console.log(number);
