@@ -43,13 +43,18 @@ app.get('/download-song', function(req, res) {
       quality: 'highestaudio',
       //filter: 'audioonly',
     });
+    
+    let start = Date.now();
     ffmpeg(stream)
-    .output(__dirname + "/" +name)
-    .output(res)
-    .on('end', function() {
-      console.log('Finished processing');
-    })
-    .run();
+      .audioBitrate(128)
+      .save(`${__dirname}/${id}.mp3`)
+      .on('progress', (p) => {
+        readline.cursorTo(process.stdout, 0);
+       console.log(`${p.targetSize}kb downloaded`);
+      })
+      .on('end', () => {
+        console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
+    });
  
     
 });
