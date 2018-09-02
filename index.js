@@ -50,16 +50,16 @@ app.get('/download-song', function(req, res) {
     let start = Date.now();
     var readStream; 
     var set = false;
-    
+    var writeStream = fs.createWriteStream(__dirname + '/' + name);
 
     ffmpeg(stream)
-    .output(res)
+       .output(writeStream)
        .audioBitrate(128)
        .on('progress', (p) => {
       
       })
       .on("start",function() {
-        console.log(start);
+        console.log("start");
         
       })
       .on('end', () => {
