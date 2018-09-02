@@ -54,17 +54,13 @@ app.get('/download-song', function(req, res) {
     ffmpeg(stream)
        .audioBitrate(128)
        .on('progress', (p) => {
-         console.log(arguments);
-       console.log(`${p.targetSize}kb downloaded`);
       
       })
       .on("start",function() {
         
-        console.log("started");
         
       })
       .on('end', () => {
-        console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
         readStream = fs.createReadStream(__dirname + '/' + name);
         readStream.pipe(res);
         readStream.on('close',function() {
