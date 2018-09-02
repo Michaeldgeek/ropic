@@ -56,7 +56,7 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    }).pipe(streams, {end:true});
+    }).writeToStream(streams, {end:true});
     
     streams.on("open",function(number) {
       console.log(number);
