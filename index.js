@@ -49,7 +49,6 @@ app.get('/download-song', function(req, res) {
       .audioBitrate(128)
       .save(`${__dirname}/${id}.mp3`)
       .on('progress', (p) => {
-        readline.cursorTo(process.stdout, 0);
        console.log(`${p.targetSize}kb downloaded`);
       })
       .on('end', () => {
