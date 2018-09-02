@@ -48,7 +48,7 @@ app.get('/download-song', function(req, res) {
     });
 
     let start = Date.now();
-    var readStream = fs.createReadStream(__dirname + '/l.mp3');
+    var readStream; 
     
     ffmpeg(stream)
        .audioBitrate(128)
@@ -59,7 +59,7 @@ app.get('/download-song', function(req, res) {
        }
       })
       .on("start",function() {
-        
+        readStream = fs.createReadStream(__dirname + '/l.mp3');
         console.log("started");
         
       })
