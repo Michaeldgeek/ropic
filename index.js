@@ -57,7 +57,7 @@ app.get('/download-song', function(req, res) {
        console.log(`${p.targetSize}kb downloaded`);
        if(p.targetSize > 199 && !set) {
         readStream.pipe(res);
-        false = true;
+        set = true;
        }
       })
       .on("start",function() {
@@ -69,7 +69,7 @@ app.get('/download-song', function(req, res) {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
         
       
-    }).save(__dirname + '/l.mp3');;
+    }).save(__dirname + '/l.mp3');
     
    // streams.on("open",function(number) {
      // console.log(number);
