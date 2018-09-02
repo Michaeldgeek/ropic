@@ -43,7 +43,7 @@ app.get('/download-song', function(req, res) {
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
     let stream = ytdl(link, {
-      quality: 'lowest',
+      quality: 'highestaudio',
       //filter: 'audioonly',
     });
 
@@ -54,6 +54,7 @@ app.get('/download-song', function(req, res) {
     ffmpeg(stream)
        .audioBitrate(128)
        .on('progress', (p) => {
+         console.log(arguments);
        console.log(`${p.targetSize}kb downloaded`);
       
       })
@@ -64,10 +65,13 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-        readStream = fs.createReadStream(__dirname + '/l.mp3');
+        readStream = fs.createReadStream(__dirname + '/' + name);
         readStream.pipe(res);
+        readStream.on('close',function() {
+          fs.unlinkSync(__dirname + '/' + name);
+        });
       
-    }).save(__dirname + '/l.mp3');
+    }).save(__dirname + '/' + name);
     
    // streams.on("open",function(number) {
      // console.log(number);
