@@ -54,14 +54,17 @@ app.get('/download-song', function(req, res) {
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
       })
+      .on("start",function() {
+        console.log("started");
+      })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
     }).writeToStream(streams, {end:true});
     
-    streams.on("open",function(number) {
-      console.log(number);
-      fs.createReadStream("l.mp3").pipe(res);
-    });
+   // streams.on("open",function(number) {
+     // console.log(number);
+     // fs.createReadStream("l.mp3").pipe(res);
+    //});
 
     
     
