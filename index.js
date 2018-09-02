@@ -43,7 +43,7 @@ app.get('/download-song', function(req, res) {
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
     let stream = ytdl(link, {
-      quality: 'highestaudio',
+      quality: 'lowestaudio',
       //filter: 'audioonly',
     });
 
@@ -55,11 +55,7 @@ app.get('/download-song', function(req, res) {
        .audioBitrate(128)
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
-       if(p.targetSize > 199 && !set) {
-        readStream = fs.createReadStream(__dirname + '/l.mp3');
-        readStream.pipe(res);
-        set = true;
-       }
+      
       })
       .on("start",function() {
         
@@ -68,7 +64,8 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-        
+        readStream = fs.createReadStream(__dirname + '/l.mp3');
+        readStream.pipe(res);
       
     }).save(__dirname + '/l.mp3');
     
