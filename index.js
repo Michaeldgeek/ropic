@@ -43,7 +43,7 @@ app.get('/download-song', function(req, res) {
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
     let stream = ytdl(link, {
-      quality: 'lowestaudio',
+      quality: 'lowest',
       //filter: 'audioonly',
     });
 
