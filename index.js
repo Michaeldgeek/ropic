@@ -37,29 +37,32 @@ app.get('/download-song', function(req, res) {
       maxResults: 10,
       key: config.YT_KEY
     };
+    res.setHeader("content-type", "audio/mp3");
+    
     var streams = fs.createWriteStream('l.mp3');
     
-
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
     let stream = ytdl(link, {
       quality: 'highestaudio',
       //filter: 'audioonly',
     });
-    var id = "l";
+
     let start = Date.now();
-    res.setHeader("content-type", "audio/mp3");
     ffmpeg(stream)
-      .output(res, { end:true })
-      .audioBitrate(128)
+       .audioBitrate(128)
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
-       fs.createReadStream("l.mp3")
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    });
+    }).pipe(streams, {end:true});
     
+    streams.on("open",function(number) {
+      console.log(number);
+      fs.createReadStream("l.mp3").pipe(res);
+    });
+
     
     
 });
