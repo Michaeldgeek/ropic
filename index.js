@@ -50,7 +50,7 @@ app.get('/download-song', function(req, res) {
     let start = Date.now();
     res.setHeader("content-type", "audio/mp3");
     ffmpeg(stream)
-      .output(res)
+      .output(res, { end:true })
       .audioBitrate(128)
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
@@ -58,7 +58,7 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    }).pipe(streams, {end:true});
+    });
     
     
     
