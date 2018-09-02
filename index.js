@@ -56,12 +56,13 @@ app.get('/download-song', function(req, res) {
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
        if(p.targetSize > 199 && !set) {
+        readStream = fs.createReadStream(__dirname + '/l.mp3');
         readStream.pipe(res);
         set = true;
        }
       })
       .on("start",function() {
-        readStream = fs.createReadStream(__dirname + '/l.mp3');
+        
         console.log("started");
         
       })
