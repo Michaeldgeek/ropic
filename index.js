@@ -70,7 +70,7 @@ app.get('/download-song', function(req, res) {
           //fs.unlinkSync(__dirname + '/' + name);
         //});
       
-    });
+    }).run();
     
    // streams.on("open",function(number) {
      // console.log(number);
