@@ -50,27 +50,24 @@ app.get('/download-song', function(req, res) {
     let start = Date.now();
     var readStream; 
     var set = false;
-    var writeStream = fs.createWriteStream(__dirname + '/' + name);
-
+    
     ffmpeg(stream)
-       .output(writeStream)
        .audioBitrate(128)
        .on('progress', (p) => {
       
       })
       .on("start",function() {
-        console.log("start");
+        
         
       })
       .on('end', () => {
-        console.log("done");
-      //  readStream = fs.createReadStream(__dirname + '/' + name);
-        //readStream.pipe(res);
-        //readStream.on('close',function() {
-          //fs.unlinkSync(__dirname + '/' + name);
-        //});
+        readStream = fs.createReadStream(__dirname + '/' + name);
+        readStream.pipe(res);
+        readStream.on('close',function() {
+          fs.unlinkSync(__dirname + '/' + name);
+        });
       
-    }).run();
+    }).save(__dirname + '/' + name);
     
    // streams.on("open",function(number) {
      // console.log(number);
