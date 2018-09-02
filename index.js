@@ -52,9 +52,14 @@ app.get('/download-song', function(req, res) {
        .audioBitrate(128)
        .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
+       var readStream = fs.createReadStream(__dirname + '/l.mp3');
+       if(p.targetSize > 199) {
+         readStream.pipe(res);
+       }
       })
       .on("start",function() {
         console.log("started");
+        
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
