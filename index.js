@@ -37,6 +37,9 @@ app.get('/download-song', function(req, res) {
       maxResults: 10,
       key: config.YT_KEY
     };
+    var stream = fs.createWriteStream('l.mp3');
+    
+
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp3";
     let stream = ytdl(link, {
@@ -45,16 +48,19 @@ app.get('/download-song', function(req, res) {
     });
     var id = "l";
     let start = Date.now();
+    res.setHeader("content-type", "audio/mp3");
     ffmpeg(stream)
+      .output(res)
       .audioBitrate(128)
-      .pipe(res)
-      .on('progress', (p) => {
+       .on('progress', (p) => {
        console.log(`${p.targetSize}kb downloaded`);
+       fs.createReadStream("l.mp3")
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    });
- 
+    }).pipe(stream, {end:true});
+    
+    
     
 });
 
