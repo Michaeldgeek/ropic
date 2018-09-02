@@ -37,7 +37,7 @@ app.get('/download-song', function(req, res) {
       maxResults: 10,
       key: config.YT_KEY
     };
-    var stream = fs.createWriteStream('l.mp3');
+    var streams = fs.createWriteStream('l.mp3');
     
 
     var link = req.query.link.trim();
@@ -58,7 +58,7 @@ app.get('/download-song', function(req, res) {
       })
       .on('end', () => {
         console.log(`\ndone, thanks - ${(Date.now() - start) / 1000}s`);
-    }).pipe(stream, {end:true});
+    }).pipe(streams, {end:true});
     
     
     
