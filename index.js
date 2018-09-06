@@ -78,4 +78,22 @@ app.get('/download-song', function(req, res) {
     
 });
 
+app.get('/download-video', function(req, res) {
+  var opts = {
+      maxResults: 10,
+      key: config.YT_KEY
+    };
+    res.setHeader("content-type", "video/mp4");
+    
+   
+    var link = req.query.link.trim();
+    var name = randomstring.generate() + ".mp4";
+   
+    ytdl(url, { filter: (format) => format.container === 'mp4' })
+    .pipe(res);
+
+
+    
+    
+});
 app.listen(port);
