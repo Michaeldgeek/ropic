@@ -89,7 +89,7 @@ app.get('/download-video', function(req, res) {
     var link = req.query.link.trim();
     var name = randomstring.generate() + ".mp4";
    
-    ytdl(url, { filter: (format) => format.container === 'mp4' })
+    ytdl(link, { filter: (format) => format.container === 'mp4' })
     .pipe(res);
 
 
