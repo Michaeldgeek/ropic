@@ -80,7 +80,9 @@ app.get('/download-song', function(req, res) {
 
 app.get('/download-video', function(req, res) {
   var host = req.hostname;
+  var origin =req.origin;
   console.log(host);
+  console.log(origin);
   return;
   var opts = {
       maxResults: 10,
