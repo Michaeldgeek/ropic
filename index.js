@@ -79,6 +79,9 @@ app.get('/download-song', function(req, res) {
 });
 
 app.get('/download-video', function(req, res) {
+  var host = req.hostname;
+  console.log(host);
+  return;
   var opts = {
       maxResults: 10,
       key: config.YT_KEY
